@@ -233,10 +233,10 @@ class S3FS(GenericFS):
 
     def get_prefix(self):
         """Full prefix: bucket + optional prefix"""
-        prefix = self.bucket
+        prefix = ""
         if prefix.startswith("s3://"):
             prefix = prefix[5:]
-        if self.prefix is None:
+        if self.prefix:
             prefix += self.delimiter + self.prefix
         return prefix
 
