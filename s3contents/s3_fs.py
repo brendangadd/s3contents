@@ -50,9 +50,9 @@ class S3FS(GenericFS):
     sse = Unicode(help="Type of server-side encryption to use").tag(config=True)
     kms_key_id = Unicode(help="KMS ID to use to encrypt workbooks").tag(config=True)
 
-    prefix = Unicode("", help="Prefix path inside the specified bucket").tag(
-        config=True
-    )
+    prefix = Unicode(
+        help="Prefix path inside the specified bucket", allow_none=True, default_value=None
+    ).tag(config=True)
     delimiter = Unicode("/", help="Path delimiter").tag(config=True)
 
     dir_keep_file = Unicode(
@@ -236,7 +236,7 @@ class S3FS(GenericFS):
         prefix = self.bucket
         if prefix.startswith("s3://"):
             prefix = prefix[5:]
-        if self.prefix:
+        if self.prefix is None:
             prefix += self.delimiter + self.prefix
         return prefix
 
